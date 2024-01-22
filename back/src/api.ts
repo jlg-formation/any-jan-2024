@@ -1,7 +1,6 @@
-const express = require("express");
+import express from "express";
 
 const app = express.Router();
-module.exports = app;
 
 app.get("/articles", (req, res) => {
   res.json([
@@ -9,3 +8,5 @@ app.get("/articles", (req, res) => {
     { id: "a2", name: "Pelle", price: 5.5, qty: 23 },
   ]);
 });
+
+export default app;
