@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -18,4 +19,9 @@ export class ListComponent {
   faRotateRight = faRotateRight;
   faPlus = faPlus;
   faTrashAlt = faTrashAlt;
+
+  articles = [
+    { id: 'a1', name: 'Tournevis', price: 2.99, qty: 123 },
+    { id: 'a2', name: 'Pelle', price: 5.5, qty: 23 },
+  ];
 }

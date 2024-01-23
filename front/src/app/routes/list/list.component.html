@@ -22,26 +22,13 @@
         </tr>
       </thead>
       <tbody>
+        @for (a of articles; track a.id) {
         <tr>
-          <td class="name">Tournevis</td>
-          <td class="price">2.99 €</td>
-          <td class="qty">123</td>
+          <td class="name">{{ a.name }}</td>
+          <td class="price">{{ a.price }} €</td>
+          <td class="qty">{{ a.qty }}</td>
         </tr>
-        <tr>
-          <td class="name">Pelle</td>
-          <td class="price">5.00 €</td>
-          <td class="qty">42</td>
-        </tr>
-        <tr>
-          <td class="name">Marteau</td>
-          <td class="price">134.00 €</td>
-          <td class="qty">35</td>
-        </tr>
-        <tr>
-          <td class="name">Scie</td>
-          <td class="price">10.50 €</td>
-          <td class="qty">123</td>
-        </tr>
+        }
       </tbody>
     </table>
   </div>
