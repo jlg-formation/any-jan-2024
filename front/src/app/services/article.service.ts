@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Article } from '../interfaces/article';
+import { HttpClient } from '@angular/common/http';
+
+const url = 'http://localhost:3000/api/articles';
 
 @Injectable({
   providedIn: 'root',
@@ -10,5 +13,9 @@ export class ArticleService {
     { id: 'a2', name: 'Pelle', price: 5.5, qty: 23 },
   ];
 
-  constructor() {}
+  constructor(private readonly http: HttpClient) {}
+
+  refresh() {
+    this.http.get(url);
+  }
 }
