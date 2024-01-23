@@ -8,6 +8,7 @@ import {
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { Article } from '../../interfaces/article';
+import { ArticleService } from '../../services/article.service';
 
 @Component({
   selector: 'app-list',
@@ -21,8 +22,7 @@ export class ListComponent {
   faPlus = faPlus;
   faTrashAlt = faTrashAlt;
 
-  articles: Article[] = [
-    { id: 'a1', name: 'Tournevis', price: 2.99, qty: 123 },
-    { id: 'a2', name: 'Pelle', price: 5.5, qty: 23 },
-  ];
+  constructor(protected readonly articleService: ArticleService) {
+    console.log('instantiate service article');
+  }
 }
