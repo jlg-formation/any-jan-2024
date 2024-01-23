@@ -4,6 +4,7 @@
     "outDir": "dist",
     "moduleResolution": "Node",
     "module": "CommonJS",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "strict": true
   }
 }
