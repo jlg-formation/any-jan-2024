@@ -60,6 +60,10 @@ export class ListComponent implements OnInit {
   }
 
   select(a: Article) {
+    if (this.selectedArticles.has(a)) {
+      this.selectedArticles.delete(a);
+      return;
+    }
     this.selectedArticles.add(a);
   }
 }
