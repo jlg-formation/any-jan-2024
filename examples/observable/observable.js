@@ -1,15 +1,21 @@
-const { Observable } = require("rxjs");
+import { Observable } from "rxjs";
 
 const obs = new Observable((subscriber) => {
   subscriber.next(34);
   subscriber.next(false);
   subscriber.next("toto");
-  setTimeout(() => {
+  const timer = setTimeout(() => {
+    console.log("coucou");
     subscriber.next({
       tutu: 56,
     });
     subscriber.complete();
   }, 1000);
+
+  return () => {
+    console.log("aaah... je meurs!");
+    clearTimeout(timer);
+  };
 });
 
 const observer = {
@@ -24,4 +30,8 @@ const observer = {
   },
 };
 
-obs.subscribe(observer);
+const subscription = obs.subscribe(observer);
+
+setTimeout(() => {
+  subscription.unsubscribe();
+}, 500);
