@@ -9,7 +9,7 @@ const url = 'http://localhost:3000/api/articles';
   providedIn: 'root',
 })
 export class ArticleService {
-  articles: Article[] = [];
+  articles: Article[] | undefined = undefined;
 
   constructor(private readonly http: HttpClient) {}
 

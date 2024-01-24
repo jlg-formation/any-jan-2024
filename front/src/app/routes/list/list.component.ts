@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
@@ -17,7 +17,7 @@ import { ArticleService } from '../../services/article.service';
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
 })
-export class ListComponent {
+export class ListComponent implements OnInit {
   faPlus = faPlus;
   faRotateRight = faRotateRight;
   faTrashAlt = faTrashAlt;
@@ -28,6 +28,11 @@ export class ListComponent {
 
   constructor(protected readonly articleService: ArticleService) {
     console.log('instantiate service article');
+  }
+  ngOnInit(): void {
+    if (this.articleService.articles === undefined) {
+      this.refresh();
+    }
   }
 
   refresh() {
