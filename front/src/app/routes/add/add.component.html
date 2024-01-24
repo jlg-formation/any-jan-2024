@@ -1,26 +1,42 @@
 <main>
   <h1>Ajouter un article</h1>
-  <form>
+  <form [formGroup]="f">
     <label>
       <span>Nom</span>
-      <input type="text" />
-      <span class="error"></span>
+      <input type="text" formControlName="name" />
+      <span class="error">
+        @if (f.controls.name.invalid && f.controls.name.touched) { @if
+        (f.controls.name.errors?.["required"]) {
+        <span>Champ requis</span>
+        } @else if (f.controls.name.errors?.["minlength"]) {
+        <span>
+          Champ trop court (
+          {{f.controls.name.errors?.["minlength"].actualLength
+          }}
+          <
+          {{f.controls.name.errors?.["minlength"].requiredLength
+          }}
+          )
+        </span>
+        }}
+      </span>
     </label>
     <label>
       <span>Prix</span>
-      <input type="number" />
+      <input type="number" formControlName="price" />
       <span class="error"></span>
     </label>
     <label>
       <span>Quantité</span>
-      <input type="number" />
+      <input type="number" formControlName="qty" />
       <span class="error"></span>
     </label>
     <div class="error"></div>
-    <button class="primary">
+    <button class="primary" [disabled]="f.invalid">
       <fa-icon [icon]="faPlus"></fa-icon>
-
       <span>Ajouter</span>
     </button>
+    <!-- {{ f.value | json }} -->
+    {{f.controls.name.errors?.["minlength"] | json}}
   </form>
 </main>
