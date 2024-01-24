@@ -9,7 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Article } from '../../interfaces/article';
 import { ArticleService } from '../../services/article.service';
-import { of, switchMap } from 'rxjs';
+import { catchError, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-list',
@@ -23,13 +23,23 @@ export class ListComponent {
   faRotateRight = faRotateRight;
   faTrashAlt = faTrashAlt;
 
+  errorMsg = '';
+
   constructor(protected readonly articleService: ArticleService) {
     console.log('instantiate service article');
   }
 
   refresh() {
     of(undefined)
-      .pipe(switchMap(() => this.articleService.refresh()))
+      .pipe(
+        switchMap(() => this.articleService.refresh()),
+        catchError((err) => {
+          if (err instanceof Error) {
+            this.errorMsg = err.message;
+          }
+          return of(undefined);
+        })
+      )
       .subscribe();
   }
 }

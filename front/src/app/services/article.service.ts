@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map, tap } from 'rxjs';
+import { Observable, catchError, map, tap } from 'rxjs';
 import { Article } from '../interfaces/article';
 
 const url = 'http://localhost:3000/api/articles';
@@ -20,6 +20,10 @@ export class ArticleService {
     return this.http.get<Article[]>(url).pipe(
       map((articles) => {
         this.articles = articles;
+      }),
+      catchError((err) => {
+        console.log('err: ', err);
+        throw new Error('Erreur Technique');
       })
     );
   }
