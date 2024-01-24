@@ -9,6 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { catchError, finalize, of, switchMap, tap } from 'rxjs';
 import { ArticleService } from '../../services/article.service';
+import { Article } from '../../interfaces/article';
 
 @Component({
   selector: 'app-list',
@@ -18,17 +19,19 @@ import { ArticleService } from '../../services/article.service';
   styleUrl: './list.component.scss',
 })
 export class ListComponent implements OnInit {
+  errorMsg = '';
+  faCircleNotch = faCircleNotch;
   faPlus = faPlus;
   faRotateRight = faRotateRight;
   faTrashAlt = faTrashAlt;
-  faCircleNotch = faCircleNotch;
-
-  errorMsg = '';
   isRefreshing = false;
+
+  selectedArticles = new Set<Article>();
 
   constructor(protected readonly articleService: ArticleService) {
     console.log('instantiate service article');
   }
+
   ngOnInit(): void {
     if (this.articleService.articles === undefined) {
       this.refresh();
@@ -54,5 +57,9 @@ export class ListComponent implements OnInit {
         })
       )
       .subscribe();
+  }
+
+  select(a: Article) {
+    this.selectedArticles.add(a);
   }
 }
