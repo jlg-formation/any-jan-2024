@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
-import { Article } from '../interfaces/article';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable, map, tap } from 'rxjs';
+import { Article } from '../interfaces/article';
 
 const url = 'http://localhost:3000/api/articles';
 
@@ -15,7 +16,11 @@ export class ArticleService {
 
   constructor(private readonly http: HttpClient) {}
 
-  refresh() {
-    this.http.get(url);
+  refresh(): Observable<void> {
+    return this.http.get<Article[]>(url).pipe(
+      map((articles) => {
+        this.articles = articles;
+      })
+    );
   }
 }
