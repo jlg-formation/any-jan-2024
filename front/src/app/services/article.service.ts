@@ -37,4 +37,15 @@ export class ArticleService {
       })
     );
   }
+
+  remove(ids: string[]): any {
+    return of(undefined).pipe(
+      delay(1000),
+      switchMap(() => this.http.delete<void>(url, { body: ids })),
+      catchError((err) => {
+        console.log('err: ', err);
+        throw new Error('Erreur Technique');
+      })
+    );
+  }
 }

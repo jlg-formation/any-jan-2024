@@ -60,6 +60,14 @@ export class ListComponent implements OnInit {
 
   remove() {
     console.log('remove');
+    of(undefined)
+      .pipe(
+        switchMap(() => {
+          const ids = [...this.selectedArticles].map((a) => a.id);
+          return this.articleService.remove(ids);
+        })
+      )
+      .subscribe();
   }
 
   select(a: Article) {
