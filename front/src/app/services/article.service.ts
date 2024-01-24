@@ -9,10 +9,7 @@ const url = 'http://localhost:3000/api/articles';
   providedIn: 'root',
 })
 export class ArticleService {
-  articles: Article[] = [
-    { id: 'a1', name: 'Tournevis', price: 2.99, qty: 123 },
-    { id: 'a2', name: 'Pelle', price: 5.5, qty: 23 },
-  ];
+  articles: Article[] = [];
 
   constructor(private readonly http: HttpClient) {}
 
