@@ -25,7 +25,6 @@ export class ListComponent implements OnInit {
   faRotateRight = faRotateRight;
   faTrashAlt = faTrashAlt;
   isRefreshing = false;
-
   selectedArticles = new Set<Article>();
 
   constructor(protected readonly articleService: ArticleService) {
@@ -57,6 +56,10 @@ export class ListComponent implements OnInit {
         })
       )
       .subscribe();
+  }
+
+  remove() {
+    console.log('remove');
   }
 
   select(a: Article) {
