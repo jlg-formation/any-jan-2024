@@ -1,15 +1,14 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
+  faCircleNotch,
   faPlus,
   faRotateRight,
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import { Article } from '../../interfaces/article';
+import { catchError, finalize, of, switchMap, tap } from 'rxjs';
 import { ArticleService } from '../../services/article.service';
-import { catchError, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-list',
@@ -22,8 +21,10 @@ export class ListComponent {
   faPlus = faPlus;
   faRotateRight = faRotateRight;
   faTrashAlt = faTrashAlt;
+  faCircleNotch = faCircleNotch;
 
   errorMsg = '';
+  isRefreshing = false;
 
   constructor(protected readonly articleService: ArticleService) {
     console.log('instantiate service article');
@@ -32,12 +33,19 @@ export class ListComponent {
   refresh() {
     of(undefined)
       .pipe(
+        tap(() => {
+          this.isRefreshing = true;
+          this.errorMsg = '';
+        }),
         switchMap(() => this.articleService.refresh()),
         catchError((err) => {
           if (err instanceof Error) {
             this.errorMsg = err.message;
           }
           return of(undefined);
+        }),
+        finalize(() => {
+          this.isRefreshing = false;
         })
       )
       .subscribe();

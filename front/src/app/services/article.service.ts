@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, tap } from 'rxjs';
+import { Observable, catchError, delay, map, of, switchMap, tap } from 'rxjs';
 import { Article } from '../interfaces/article';
 
 const url = 'http://localhost:3000/api/articles';
@@ -17,7 +17,9 @@ export class ArticleService {
   constructor(private readonly http: HttpClient) {}
 
   refresh(): Observable<void> {
-    return this.http.get<Article[]>(url).pipe(
+    return of(undefined).pipe(
+      delay(1000),
+      switchMap(() => this.http.get<Article[]>(url)),
       map((articles) => {
         this.articles = articles;
       }),
