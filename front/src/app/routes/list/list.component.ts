@@ -26,6 +26,7 @@ export class ListComponent implements OnInit {
   faTrashAlt = faTrashAlt;
   isRefreshing = false;
   selectedArticles = new Set<Article>();
+  isRemoving = false;
 
   constructor(protected readonly articleService: ArticleService) {
     console.log('instantiate service article');
@@ -62,9 +63,29 @@ export class ListComponent implements OnInit {
     console.log('remove');
     of(undefined)
       .pipe(
+        tap(() => {
+          this.errorMsg = '';
+          this.isRemoving = true;
+        }),
         switchMap(() => {
           const ids = [...this.selectedArticles].map((a) => a.id);
           return this.articleService.remove(ids);
+        }),
+        switchMap(() => {
+          return this.articleService.refresh();
+        }),
+        tap(() => {
+          this.selectedArticles.clear();
+        }),
+        catchError((err) => {
+          console.log('err: ', err);
+          if (err instanceof Error) {
+            this.errorMsg = 'Erreur Technique';
+          }
+          return of(undefined);
+        }),
+        finalize(() => {
+          this.isRemoving = false;
         })
       )
       .subscribe();
